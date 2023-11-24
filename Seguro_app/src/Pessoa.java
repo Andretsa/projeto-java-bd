@@ -2,17 +2,24 @@ public class Pessoa {
     private int idPessoa;
     private String cpf;
     private String nomeCompleto;
-    private String whatsapp;
+    private String telefone;
     private String email;
 
-    public Pessoa ( ) {
+    public Pessoa() {
 
     }
-    public Pessoa(int idPessoa, String cpf, String nomeCompleto, String whatsapp, String email) {
+    public Pessoa(String cpf, String nomeCompleto, String telefone, String email) {
+        this.cpf = cpf;
+        this.nomeCompleto = nomeCompleto;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    public Pessoa(int idPessoa, String cpf, String nomeCompleto, String telefone, String email) {
         this.idPessoa = idPessoa;
         this.cpf = cpf;
         this.nomeCompleto = nomeCompleto;
-        this.whatsapp = whatsapp;
+        this.telefone = telefone;
         this.email = email;
     }
 
@@ -40,12 +47,12 @@ public class Pessoa {
         this.nomeCompleto = nomeCompleto;
     }
 
-    public String getWhatsapp() {
-        return whatsapp;
+    public String gettelefone() {
+        return telefone;
     }
 
-    public void setWhatsapp(String whatsapp) {
-        this.whatsapp = whatsapp;
+    public void settelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getEmail() {

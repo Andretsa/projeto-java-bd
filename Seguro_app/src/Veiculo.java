@@ -12,17 +12,29 @@ public class Veiculo {
     private String modelo;
     private String status;
     private String seguradora;
+    private String idPessoa;
+
     public Veiculo(){
 
     }
 
-    public Veiculo(int idVeiculo, String placa, int ano, String modelo, String status, String seguradora) {
+    public Veiculo(String placa, int ano, String modelo, String status, String seguradora) {
         this.idVeiculo = idVeiculo;
         this.placa = placa;
         this.ano = ano;
         this.modelo = modelo;
         this.status = status;
         this.seguradora = seguradora;
+    }
+
+    public Veiculo(int idVeiculo, String placa, int ano, String modelo, String status, String seguradora, String idPessoa) {
+        this.idVeiculo = idVeiculo;
+        this.placa = placa;
+        this.ano = ano;
+        this.modelo = modelo;
+        this.status = status;
+        this.seguradora = seguradora;
+        this.idPessoa = idPessoa;
     }
 
     public int getIdVeiculo() {
@@ -71,5 +83,13 @@ public class Veiculo {
 
     public void setSeguradora(String seguradora) {
         this.seguradora = seguradora;
+    }
+
+    public String getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(String idPessoa) {
+        this.idPessoa = idPessoa;
     }
 }

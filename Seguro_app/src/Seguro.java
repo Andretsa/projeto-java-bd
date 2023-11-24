@@ -3,26 +3,23 @@ import java.time.LocalDate;
 public class Seguro {
     private int idSeguro;
     private LocalDate vigencia;
-    private String situacao;
-    private String apolice;
+    private String status;
+    private String numeroApolice;
     private int idSegurado;
     private int idVeiculo;
-
-    // Construtores
+    
     public Seguro() {
-        // Construtor vazio
+        
     }
 
-    public Seguro(int idSeguro, LocalDate vigencia, String situacao, String apolice, int idSegurado, int idVeiculo) {
+    public Seguro(int idSeguro, LocalDate vigencia, String status, String numeroApolice, int idSegurado, int idVeiculo) {
         this.idSeguro = idSeguro;
         this.vigencia = vigencia;
-        this.situacao = situacao;
-        this.apolice = apolice;
+        this.status = status;
+        this.numeroApolice = numeroApolice;
         this.idSegurado = idSegurado;
         this.idVeiculo = idVeiculo;
     }
-
-    // Getters e Setters...
 
     public int getIdSeguro() {
         return idSeguro;
@@ -40,20 +37,20 @@ public class Seguro {
         this.vigencia = vigencia;
     }
 
-    public String getSituacao() {
-        return situacao;
+    public String getstatus() {
+        return status;
     }
 
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
+    public void setstatus(String status) {
+        this.status = status;
     }
 
-    public String getApolice() {
-        return apolice;
+    public String getNumeroApolice() {
+        return numeroApolice;
     }
 
     public void setApolice(String apolice) {
-        this.apolice = apolice;
+        this.numeroApolice = numeroApolice;
     }
 
     public int getIdSegurado() {

@@ -81,13 +81,13 @@ public class SeguroDAO {
     }
 
     private void inserirSeguro(Seguro seguro) throws SQLException {
-        String query = "INSERT INTO Seguro (idSeguro, vigencia, situacao, apolice, idSegurado, idVeiculo) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Seguro (idSeguro, vigencia, status, apolice, idSegurado, idVeiculo) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, seguro.getIdSeguro());
             preparedStatement.setString(2, String.valueOf(seguro.getVigencia()));
-            preparedStatement.setString(3, seguro.getSituacao());
-            preparedStatement.setString(4, seguro.getApolice());
+            preparedStatement.setString(3, seguro.getstatus());
+            preparedStatement.setString(4, seguro.getNumeroApolice());
             preparedStatement.setInt(5, seguro.getIdSegurado());
             preparedStatement.setInt(6, seguro.getIdVeiculo());
 
@@ -100,12 +100,12 @@ public class SeguroDAO {
     }
 
     private void atualizarSeguro(Seguro seguro) throws SQLException {
-        String query = "UPDATE Seguro SET vigencia = ?, situacao = ?, apolice = ?, idSegurado = ?, idVeiculo = ? WHERE idSeguro = ?";
+        String query = "UPDATE Seguro SET vigencia = ?, status = ?, apolice = ?, idSegurado = ?, idVeiculo = ? WHERE idSeguro = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, String.valueOf(seguro.getVigencia()));
-            preparedStatement.setString(2, seguro.getSituacao());
-            preparedStatement.setString(3, seguro.getApolice());
+            preparedStatement.setString(2, seguro.getstatus());
+            preparedStatement.setString(3, seguro.getNumeroApolice());
             preparedStatement.setInt(4, seguro.getIdSegurado());
             preparedStatement.setInt(5, seguro.getIdVeiculo());
             preparedStatement.setInt(6, seguro.getIdSeguro());
@@ -122,8 +122,8 @@ public class SeguroDAO {
         Seguro seguro = new Seguro();
         seguro.setIdSeguro(resultSet.getInt("idSeguro"));
         seguro.setVigencia(resultSet.getObject("vigencia", LocalDate.class));
-        seguro.setSituacao(resultSet.getString("situacao"));
-        seguro.setApolice(resultSet.getString("apolice"));
+        seguro.setstatus(resultSet.getString("status"));
+        seguro.setApolice(resultSet.getString("numeroApolice"));
         seguro.setIdSegurado(resultSet.getInt("idSegurado"));
         seguro.setIdVeiculo(resultSet.getInt("idVeiculo"));
         return seguro;

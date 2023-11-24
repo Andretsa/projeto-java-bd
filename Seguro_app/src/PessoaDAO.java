@@ -12,12 +12,12 @@ public class PessoaDAO {
 
     // Create
     public boolean adiciona(Pessoa pessoa) {
-        String sql = "INSERT INTO pessoa(idPessoa, cpf, nomeCompleto, whatsapp, email) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO pessoa(idPessoa, cpf, nomeCompleto, telefone, email) VALUES(?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, pessoa.getIdPessoa());
             stmt.setString(2, pessoa.getCpf());
             stmt.setString(3, pessoa.getNomeCompleto());
-            stmt.setString(4, pessoa.getWhatsapp());
+            stmt.setString(4, pessoa.gettelefone());
             stmt.setString(5, pessoa.getEmail());
             stmt.execute();
             System.out.println("Usuário cadastrado com sucesso.");
@@ -31,7 +31,7 @@ public class PessoaDAO {
     // Read
     public ArrayList<Pessoa> listar() {
         ArrayList<Pessoa> pessoas = new ArrayList<>();
-        String sql = "SELECT idPessoa, cpf, nomeCompleto, whatsapp, email FROM pessoa";
+        String sql = "SELECT idPessoa, cpf, nomeCompleto, telefone, email FROM pessoa";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet resultSet = stmt.executeQuery();
@@ -40,7 +40,7 @@ public class PessoaDAO {
                 pessoa.setIdPessoa(resultSet.getInt("idPessoa"));
                 pessoa.setCpf(resultSet.getString("cpf"));
                 pessoa.setNomeCompleto(resultSet.getString("nomeCompleto"));
-                pessoa.setWhatsapp(resultSet.getString("whatsapp"));
+                pessoa.settelefone(resultSet.getString("telefone"));
                 pessoa.setEmail(resultSet.getString("email"));
                 pessoas.add(pessoa);
             }
@@ -53,17 +53,17 @@ public class PessoaDAO {
 
     // Read por ID
     public Pessoa buscarPorId(int idPessoa) {
-        String sql = "SELECT id_pessoa, nome_pessoa, cidade, estado, email, whatsapp FROM pessoas WHERE id_pessoa = ?";
+        String sql = "SELECT idPessoa, cpf, nomeCompleto, telefone, email FROM pessoa WHERE idPessoa = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, idPessoa);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 Pessoa pessoa = new Pessoa();
-                pessoa.setIdPessoa(resultSet.getInt("id_pessoa"));
-                pessoa.setNomeCompleto(resultSet.getString("nome_pessoa"));
+                pessoa.setIdPessoa(resultSet.getInt("idPessoa"));
+                pessoa.setNomeCompleto(resultSet.getString("nomeCompleto"));
                 pessoa.setCpf(resultSet.getString("cpf"));
-                pessoa.setWhatsapp(resultSet.getString("telefone"));
+                pessoa.settelefone(resultSet.getString("telefone"));
                 pessoa.setEmail(resultSet.getString("email"));
                 stmt.close();
                 return pessoa;
@@ -78,13 +78,13 @@ public class PessoaDAO {
 
     // Update
     public void atualizar(Pessoa pessoa) {
-        String sql = "UPDATE pessoas SET nome_pessoa=?, cpf=?, email=?, telefone=? WHERE id_pessoa=?";
+        String sql = "UPDATE pessoas SET nomeCompleto=?, cpf=?, email=?, =? WHERE idPessoa=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, pessoa.getNomeCompleto());
             stmt.setString(2, pessoa.getCpf());
             stmt.setString(3, pessoa.getEmail());
-            stmt.setString(4, pessoa.getWhatsapp());
+            stmt.setString(4, pessoa.gettelefone());
             stmt.setInt(5, pessoa.getIdPessoa());
             int linhasAfetadas = stmt.executeUpdate();
             stmt.close();
