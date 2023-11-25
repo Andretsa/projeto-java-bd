@@ -10,7 +10,7 @@ public class Conexao {
         try{
             String url = "jdbc:mysql://localhost/seguro";
             String usuario ="root";
-            String senha="root";
+            String senha="Andretsa@123";
             conexao = DriverManager.getConnection(url,usuario,senha);
             System.out.println("Conexão realizada com sucesso.");
         } catch (SQLException e) {

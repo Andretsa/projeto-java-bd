@@ -77,9 +77,10 @@ public class VeiculoDAO {
     }
 
     private void inserirVeiculo(Veiculo veiculo) throws SQLException {
-        String query = "INSERT INTO Veiculo (placa, ano, modelo, status, seguradora) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Veiculo (placa, ano, modelo, status, seguradora) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, veiculo.getPlaca());
             preparedStatement.setInt(2, veiculo.getAno());
             preparedStatement.setString(3, veiculo.getModelo());
@@ -88,7 +89,7 @@ public class VeiculoDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // Lidar com a exceção, por exemplo, logar ou relançar
+            // excecoes
             e.printStackTrace();
             throw e;
         }

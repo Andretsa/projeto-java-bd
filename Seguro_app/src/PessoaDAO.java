@@ -12,12 +12,12 @@ public class PessoaDAO {
 
     // Create
     public boolean adiciona(Pessoa pessoa) {
-        String sql = "INSERT INTO pessoa(idPessoa, cpf, nomeCompleto, telefone, email) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Pessoa(idPessoa, cpf, nomeCompleto, telefone, email) VALUES(?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, pessoa.getIdPessoa());
             stmt.setString(2, pessoa.getCpf());
             stmt.setString(3, pessoa.getNomeCompleto());
-            stmt.setString(4, pessoa.gettelefone());
+            stmt.setString(4, pessoa.getTelefone());
             stmt.setString(5, pessoa.getEmail());
             stmt.execute();
             System.out.println("Usuário cadastrado com sucesso.");
@@ -40,7 +40,7 @@ public class PessoaDAO {
                 pessoa.setIdPessoa(resultSet.getInt("idPessoa"));
                 pessoa.setCpf(resultSet.getString("cpf"));
                 pessoa.setNomeCompleto(resultSet.getString("nomeCompleto"));
-                pessoa.settelefone(resultSet.getString("telefone"));
+                pessoa.setTelefone(resultSet.getString("telefone"));
                 pessoa.setEmail(resultSet.getString("email"));
                 pessoas.add(pessoa);
             }
@@ -63,7 +63,7 @@ public class PessoaDAO {
                 pessoa.setIdPessoa(resultSet.getInt("idPessoa"));
                 pessoa.setNomeCompleto(resultSet.getString("nomeCompleto"));
                 pessoa.setCpf(resultSet.getString("cpf"));
-                pessoa.settelefone(resultSet.getString("telefone"));
+                pessoa.setTelefone(resultSet.getString("telefone"));
                 pessoa.setEmail(resultSet.getString("email"));
                 stmt.close();
                 return pessoa;
@@ -78,14 +78,12 @@ public class PessoaDAO {
 
     // Update
     public void atualizar(Pessoa pessoa) {
-        String sql = "UPDATE pessoas SET nomeCompleto=?, cpf=?, email=?, =? WHERE idPessoa=?";
+        String sql = "UPDATE pessoa SET nomeCompleto=?, telefone=?, email=? WHERE idPessoa=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, pessoa.getNomeCompleto());
-            stmt.setString(2, pessoa.getCpf());
+            stmt.setString(4, pessoa.getTelefone());
             stmt.setString(3, pessoa.getEmail());
-            stmt.setString(4, pessoa.gettelefone());
-            stmt.setInt(5, pessoa.getIdPessoa());
             int linhasAfetadas = stmt.executeUpdate();
             stmt.close();
             if (linhasAfetadas > 0) {

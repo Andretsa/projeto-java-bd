@@ -1,7 +1,7 @@
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Main {
     public static void main(String[] args) {
@@ -99,7 +99,7 @@ public class Main {
         scanner.nextLine(); // Limpar o buffer do scanner
 
         Veiculo novoVeiculo = new Veiculo(placa, ano, modelo, status, seguradora);
-        novoVeiculo.setIdPessoa(String.valueOf(idPessoa));
+        novoVeiculo.setIdPessoa(Integer.parseInt(String.valueOf(idPessoa)));
         veiculoDAO.salvarVeiculo(novoVeiculo);
 
         System.out.println("Veículo cadastrado com sucesso.");
@@ -109,40 +109,47 @@ public class Main {
         System.out.println("\nLista de Pessoas:");
         List<Pessoa> pessoas = pessoaDAO.listar();
         for (Pessoa pessoa : pessoas) {
-            System.out.println(pessoa);
+            System.out.println(pessoa.toString());
         }
     }
 
     private static void buscarPessoaPorId(PessoaDAO pessoaDAO, Scanner scanner) throws SQLException {
-        System.out.print("Informe o ID da Pessoa a buscar: ");
-        int idPessoa = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        try {
+            System.out.print("Informe o ID da Pessoa a buscar: ");
+            int idPessoa = scanner.nextInt();
+            scanner.nextLine(); // Limpar o buffer do scanner
 
-        Pessoa pessoaEncontrada = pessoaDAO.buscarPorId(idPessoa);
-        if (pessoaEncontrada != null) {
-            System.out.println("Pessoa encontrada: " + pessoaEncontrada);
-        } else {
-            System.out.println("Pessoa não encontrada.");
+            Pessoa pessoaEncontrada = pessoaDAO.buscarPorId(idPessoa);
+
+            if (pessoaEncontrada != null) {
+                pessoaEncontrada.toString();
+            } else {
+                System.out.println("Pessoa não encontrada.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Certifique-se de inserir um número como ID.");
+            scanner.nextLine(); // Limpa o buffer do scanner em caso de entrada inválida
         }
     }
+
 
     private static void atualizarPessoa(PessoaDAO pessoaDAO, Scanner scanner) throws SQLException {
         System.out.println("\nAtualizar Pessoa:");
         System.out.print("Informe o ID da Pessoa a atualizar: ");
         int idPessoa = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); // Limpa o buffer do scanner
 
         Pessoa pessoaExistente = pessoaDAO.buscarPorId(idPessoa);
 
         if (pessoaExistente != null) {
             System.out.print("Informe o novo nome completo: ");
             String novoNome = scanner.nextLine();
-            System.out.print("Informe o novo número de : ");
-            String novo = scanner.nextLine();
+            System.out.print("Informe o novo número de telefone: ");
+            String novoTelefone = scanner.nextLine();
             System.out.print("Informe o novo email: ");
             String novoEmail = scanner.nextLine();
 
-            Pessoa pessoaAtualizada = new Pessoa(idPessoa, pessoaExistente.getCpf(), novoNome, novo, novoEmail);
+            Pessoa pessoaAtualizada = new Pessoa(idPessoa, pessoaExistente.getCpf(), novoNome, novoTelefone, novoEmail);
             pessoaDAO.atualizar(pessoaAtualizada);
 
             System.out.println("Pessoa atualizada com sucesso.");
@@ -154,17 +161,18 @@ public class Main {
     private static void solicitarAlteracaoSegurado(PessoaDAO pessoaDAO, Scanner scanner) throws SQLException {
         System.out.print("Informe o ID do Segurado que deseja solicitar alteração: ");
         int idSegurado = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); // Limpa o buffer do scanner
 
-        Segurado segurado = (Segurado) pessoaDAO.buscarPorId(idSegurado);
+        Pessoa pessoa = pessoaDAO.buscarPorId(idSegurado);
 
-        if (segurado != null) {
+        if (pessoa instanceof Segurado) {
+            Segurado segurado = (Segurado) pessoa;
             System.out.print("Informe a alteração desejada: ");
             String alteracao = scanner.nextLine();
             segurado.solicitarAlteracao();
             System.out.println("Solicitação de alteração enviada com sucesso.");
         } else {
-            System.out.println("Segurado não encontrado.");
+            System.out.println("Segurado não encontrado ou não é um objeto do tipo Segurado.");
         }
     }
 }

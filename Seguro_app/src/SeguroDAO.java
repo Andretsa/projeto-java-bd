@@ -86,7 +86,7 @@ public class SeguroDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, seguro.getIdSeguro());
             preparedStatement.setString(2, String.valueOf(seguro.getVigencia()));
-            preparedStatement.setString(3, seguro.getstatus());
+            preparedStatement.setString(3, seguro.getStatus());
             preparedStatement.setString(4, seguro.getNumeroApolice());
             preparedStatement.setInt(5, seguro.getIdSegurado());
             preparedStatement.setInt(6, seguro.getIdVeiculo());
@@ -104,7 +104,7 @@ public class SeguroDAO {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, String.valueOf(seguro.getVigencia()));
-            preparedStatement.setString(2, seguro.getstatus());
+            preparedStatement.setString(2, seguro.getStatus());
             preparedStatement.setString(3, seguro.getNumeroApolice());
             preparedStatement.setInt(4, seguro.getIdSegurado());
             preparedStatement.setInt(5, seguro.getIdVeiculo());
@@ -122,8 +122,8 @@ public class SeguroDAO {
         Seguro seguro = new Seguro();
         seguro.setIdSeguro(resultSet.getInt("idSeguro"));
         seguro.setVigencia(resultSet.getObject("vigencia", LocalDate.class));
-        seguro.setstatus(resultSet.getString("status"));
-        seguro.setApolice(resultSet.getString("numeroApolice"));
+        seguro.setStatus(resultSet.getString("status"));
+        seguro.setNumeroApolice(resultSet.getString("numeroApolice"));
         seguro.setIdSegurado(resultSet.getInt("idSegurado"));
         seguro.setIdVeiculo(resultSet.getInt("idVeiculo"));
         return seguro;
