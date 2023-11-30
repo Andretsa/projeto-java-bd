@@ -1,13 +1,6 @@
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Seguro {
 
     private int idSeguro;
@@ -34,4 +27,52 @@ public class Seguro {
                 '}';
     }
 
+    public int getIdSeguro() {
+
+        return 0;
+    }
+
+    public void setIdSeguro(int idSeguro) {
+        this.idSeguro = idSeguro;
+    }
+
+    public LocalDate getVigencia() {
+        return vigencia;
+    }
+
+    public void setVigencia(LocalDate vigencia) {
+        this.vigencia = vigencia;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getNumeroApolice() {
+        return numeroApolice;
+    }
+
+    public void setNumeroApolice(String numeroApolice) {
+        this.numeroApolice = numeroApolice;
+    }
+
+    public int getIdSegurado() {
+        return idSegurado;
+    }
+
+    public void setIdSegurado(int idSegurado) {
+        this.idSegurado = idSegurado;
+    }
+
+    public int getIdVeiculo() {
+        return idVeiculo;
+    }
+
+    public void setIdVeiculo(int idVeiculo) {
+        this.idVeiculo = idVeiculo;
+    }
 }
