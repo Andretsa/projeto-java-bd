@@ -11,25 +11,11 @@ public class Seguro {
 
     private String numeroApolice;
 
-    private int idSegurado;
-
-    private int idVeiculo;
-
-    @Override
-    public String toString() {
-        return "Seguro{" +
-                "idSeguro=" + idSeguro +
-                ", vigencia=" + vigencia +
-                ", status='" + status + '\'' +
-                ", numeroApolice='" + numeroApolice + '\'' +
-                ", idSegurado=" + idSegurado +
-                ", idVeiculo=" + idVeiculo +
-                '}';
-    }
+    private Veiculo veiculo;
+    private Segurado segurado;
 
     public int getIdSeguro() {
-
-        return 0;
+        return idSeguro;
     }
 
     public void setIdSeguro(int idSeguro) {
@@ -60,19 +46,31 @@ public class Seguro {
         this.numeroApolice = numeroApolice;
     }
 
-    public int getIdSegurado() {
-        return idSegurado;
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public void setIdSegurado(int idSegurado) {
-        this.idSegurado = idSegurado;
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
-    public int getIdVeiculo() {
-        return idVeiculo;
+    public Segurado getSegurado() {
+        return segurado;
     }
 
-    public void setIdVeiculo(int idVeiculo) {
-        this.idVeiculo = idVeiculo;
+    public void setSegurado(Segurado segurado) {
+        this.segurado = segurado;
+    }
+
+    @Override
+    public String toString() {
+        return "Seguro{" +
+                "idSeguro=" + idSeguro +
+                ", vigencia=" + vigencia +
+                ", status='" + status + '\'' +
+                ", numeroApolice='" + numeroApolice + '\'' +
+                ", idSegurado=" + segurado +
+                ", idVeiculo=" + veiculo +
+                '}';
     }
 }

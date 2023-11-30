@@ -102,7 +102,7 @@ public class SeguroDAO {
         return pessoa;
     }
 
-    public void adicionarPessoa(Pessoa novaPessoa) throws SQLException {
+    public void adicionarrrPessoa(Pessoa novaPessoa) throws SQLException {
         String sql = "INSERT INTO Pessoa (cpf, nomeCompleto, telefone, email) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {

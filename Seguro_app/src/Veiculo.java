@@ -1,6 +1,4 @@
 
-
-
 public class Veiculo {
 
     private int idVeiculo;
@@ -11,32 +9,25 @@ public class Veiculo {
 
     private String modelo;
 
-    private String status;
-
     private String seguradora;
+    private Segurado segurado; //fk
 
-    private int idPessoa;
+    public Veiculo(){
 
-    public Veiculo(int idVeiculo, String placa, int ano, String modelo, String status, String seguradora) {
+    }
+    public Veiculo(int idVeiculo, String placa, int ano, String modelo, String seguradora) {
         this.idVeiculo = idVeiculo;
         this.placa = placa;
         this.ano = ano;
         this.modelo = modelo;
-        this.status = status;
         this.seguradora = seguradora;
     }
-    public Veiculo() {
 
-    }
-
-    public Veiculo(String placa, int ano, String modelo, String status, String seguradora) {
-    }
-
-    public void setIdPessoa(int i) {
-    }
-
-    public String getPlaca() {
-        return null;
+    public Veiculo(String placa, int ano, String modelo, String seguradora) {
+        this.placa = placa;
+        this.ano = ano;
+        this.modelo = modelo;
+        this.seguradora = seguradora;
     }
 
     public int getIdVeiculo() {
@@ -45,6 +36,10 @@ public class Veiculo {
 
     public void setIdVeiculo(int idVeiculo) {
         this.idVeiculo = idVeiculo;
+    }
+
+    public String getPlaca() {
+        return placa;
     }
 
     public void setPlaca(String placa) {
@@ -67,14 +62,6 @@ public class Veiculo {
         this.modelo = modelo;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getSeguradora() {
         return seguradora;
     }
@@ -83,7 +70,11 @@ public class Veiculo {
         this.seguradora = seguradora;
     }
 
-    public int getIdPessoa() {
-        return idPessoa;
+    public Segurado getSegurado() {
+        return segurado;
+    }
+
+    public void setSegurado(Segurado segurado) {
+        this.segurado = segurado;
     }
 }

@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Segurado extends Pessoa {
     private int idSegurado;
+    private Administrador administrador; // FK
 
     public int getIdSegurado() {
         return idSegurado;
@@ -10,6 +11,14 @@ public class Segurado extends Pessoa {
 
     public void setIdSegurado(int idSegurado) {
         this.idSegurado = idSegurado;
+    }
+
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
     }
 
     public void solicitarAlteracao(Scanner scanner) {
@@ -29,20 +38,20 @@ public class Segurado extends Pessoa {
                     case 1:
                         System.out.print("Informe o novo nome completo: ");
                         String novoNomeCompleto = scanner.nextLine();
-                        this.setNomeCompleto(novoNomeCompleto);
+                        super.setNomeCompleto(novoNomeCompleto);
                         break;
                     case 2:
                         System.out.print("Informe o novo telefone: ");
                         String novoTelefone = scanner.nextLine();
-                        this.setTelefone(novoTelefone);
+                        super.setTelefone(novoTelefone);
                         break;
                     case 3:
                         System.out.print("Informe o novo email: ");
                         String novoEmail = scanner.nextLine();
-                        this.setEmail(novoEmail);
+                        super.setEmail(novoEmail);
                         break;
                     case 4:
-                        System.out.println("ID Pessoa: " + this.getIdPessoa());
+                        System.out.println("ID Pessoa: " + super.getIdPessoa());
                         break;
                     default:
                         System.out.println("Opção inválida.");
@@ -51,7 +60,8 @@ public class Segurado extends Pessoa {
             } else {
                 System.out.println("Opção inválida. Por favor, insira um número válido.");
             }
-        } finally {
-
+        } catch (InputMismatchException e) {
+            System.out.println("Opção inválida. Por favor, insira um número válido.");
         }
-    }}
+    }
+}

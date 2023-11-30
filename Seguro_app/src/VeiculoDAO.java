@@ -46,13 +46,12 @@ public class VeiculoDAO {
     }
 
     private void inserirVeiculo(Veiculo veiculo, int idPessoa) throws SQLException {
-        String sql = "INSERT INTO Veiculo (placa, ano, modelo, status, seguradora, id_pessoa) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Veiculo (placa, ano, modelo, seguradora) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, veiculo.getPlaca());
             preparedStatement.setInt(2, veiculo.getAno());
             preparedStatement.setString(3, veiculo.getModelo());
-            preparedStatement.setString(4, veiculo.getStatus());
             preparedStatement.setString(5, veiculo.getSeguradora());
             preparedStatement.setInt(6, idPessoa);
 
@@ -93,13 +92,12 @@ public class VeiculoDAO {
     }
 
     private void atualizarVeiculo(Veiculo veiculo) throws SQLException {
-        String query = "UPDATE Veiculo SET placa = ?, ano = ?, modelo = ?, status = ?, seguradora = ? WHERE idVeiculo = ?";
+        String query = "UPDATE Veiculo SET placa = ?, ano = ?, modelo = ?, seguradora = ? WHERE idVeiculo = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, veiculo.getPlaca());
             stmt.setInt(2, veiculo.getAno());
             stmt.setString(3, veiculo.getModelo());
-            stmt.setString(4, veiculo.getStatus());
             stmt.setString(5, veiculo.getSeguradora());
             stmt.setInt(6, veiculo.getIdVeiculo());
 
@@ -150,7 +148,6 @@ public class VeiculoDAO {
         veiculo.setPlaca(resultSet.getString("placa"));
         veiculo.setAno(resultSet.getInt("ano"));
         veiculo.setModelo(resultSet.getString("modelo"));
-        veiculo.setStatus(resultSet.getString("status"));
         veiculo.setSeguradora(resultSet.getString("seguradora"));
         return veiculo;
     }

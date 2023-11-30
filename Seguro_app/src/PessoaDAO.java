@@ -21,7 +21,7 @@ public class PessoaDAO {
         this.connection = Conexao.GeraConexao();
     }
 
-    public boolean adiciona(Pessoa pessoa) {
+    public boolean adicionar(Pessoa pessoa, String tipoPessoa) {
         String sql = "INSERT INTO Pessoa(cpf, nomeCompleto, telefone, email) VALUES(?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, pessoa.getCpf());
@@ -34,11 +34,21 @@ public class PessoaDAO {
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         pessoa.setIdPessoa(generatedKeys.getInt(1));
+                        if ("segurado".equalsIgnoreCase(tipoPessoa)) {
+                            // Verifica se a pessoa já é um administrador
+                            Administrador administrador = getAdministradorByIdPessoa(pessoa.getIdPessoa());
+                            if (administrador != null) {
+                                adicionarSegurado(pessoa.getIdPessoa(), administrador.getIdAdministrador());
+                            } else {
+                                throw new SQLException("Falha ao obter o Administrador associado à pessoa.");
+                            }
+                        } else if ("administrador".equalsIgnoreCase(tipoPessoa)) {
+                            adicionarAdministrador(pessoa.getIdPessoa());
+                        }
                     } else {
                         throw new SQLException("Falha ao obter o ID gerado para a pessoa.");
                     }
                 }
-                System.out.println("Usuário cadastrado com sucesso.");
                 return true;
             } else {
                 System.out.println("Erro ao adicionar usuário. Nenhuma linha afetada.");
@@ -105,6 +115,62 @@ public class PessoaDAO {
             System.out.println("Pessoa atualizada com sucesso.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public Administrador getAdministradorByIdPessoa(int idPessoa) {
+        String sql = "SELECT idAdministrador FROM administrador WHERE idPessoa = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idPessoa);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    Administrador administrador = new Administrador();
+                    administrador.setIdAdministrador(resultSet.getInt("idAdministrador"));
+                    administrador.setIdPessoa(idPessoa); // Associando à Pessoa correspondente
+                    return administrador;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar administrador por ID de Pessoa: " + e.getMessage(), e);
+        }
+        return null;
+    }
+
+    public Segurado getSeguradoByIdPessoa(int idPessoa) {
+        String sql = "SELECT idSegurado FROM segurado WHERE idPessoa = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idPessoa);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    Segurado segurado = new Segurado();
+                    segurado.setIdSegurado(resultSet.getInt("idSegurado"));
+                    segurado.setIdPessoa(idPessoa); // Associando à Pessoa correspondente
+                    return segurado;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar segurado por ID de Pessoa: " + e.getMessage(), e);
+        }
+        return null;
+    }
+
+    private void adicionarSegurado(int idPessoa, int idAdministrador) {
+        String sql = "INSERT INTO Segurado(idPessoa) VALUES(?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idPessoa);
+            stmt.setInt(2, idAdministrador);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao adicionar segurado: " + e.getMessage(), e);
+        }
+    }
+
+    private void adicionarAdministrador(int idPessoa) {
+        String sql = "INSERT INTO Administrador(idPessoa) VALUES(?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idPessoa);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao adicionar administrador: " + e.getMessage(), e);
         }
     }
 }

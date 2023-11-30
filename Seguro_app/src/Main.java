@@ -74,9 +74,15 @@ public class Main {
         System.out.print("Informe o email: ");
         String email = scanner.nextLine();
 
+        System.out.print("Informe o tipo de pessoa (segurado ou administrador): ");
+        String tipoPessoa = scanner.nextLine();
+
         Pessoa novaPessoa = new Pessoa(cpf, nomeCompleto, telefone, email);
-        pessoaDAO.adiciona(novaPessoa);
-        System.out.println("Pessoa cadastrada com sucesso.");
+        if (pessoaDAO.adicionar(novaPessoa, tipoPessoa)) {
+            System.out.println("Pessoa cadastrada com sucesso.");
+        } else {
+            System.out.println("Erro ao cadastrar pessoa. Verifique os dados e tente novamente.");
+        }
     }
 
     private static void adicionarVeiculo(VeiculoDAO veiculoDAO, PessoaDAO pessoaDAO, Scanner scanner) throws SQLException {
@@ -88,21 +94,31 @@ public class Main {
         scanner.nextLine(); // Limpar o buffer do scanner
         System.out.print("Informe o modelo: ");
         String modelo = scanner.nextLine();
-        System.out.print("Informe o status: ");
-        String status = scanner.nextLine();
         System.out.print("Informe a seguradora: ");
         String seguradora = scanner.nextLine();
 
-        listarPessoas(pessoaDAO);
+        pessoaDAO.listar();
         System.out.print("Informe o ID da Pessoa a associar o veículo: ");
         int idPessoa = scanner.nextInt();
         scanner.nextLine(); // Limpar o buffer do scanner
 
-        Veiculo novoVeiculo = new Veiculo(placa, ano, modelo, status, seguradora);
-        novoVeiculo.setIdPessoa(idPessoa);
-        veiculoDAO.salvarVeiculo(novoVeiculo);
+        Pessoa pessoaAssociada = pessoaDAO.buscarPorId(idPessoa);
 
-        System.out.println("Veículo cadastrado com sucesso.");
+        if(pessoaAssociada != null){
+            Veiculo novoVeiculo = new Veiculo(placa, ano, modelo,seguradora);
+            // Obtém o Segurado associado à Pessoa
+            Segurado segurado = pessoaDAO.getSeguradoByIdPessoa(idPessoa);
+            if(segurado != null) {
+                novoVeiculo.setSegurado(novoVeiculo.getSegurado());
+                veiculoDAO.salvarVeiculo(novoVeiculo);
+
+                System.out.println("Veículo cadastrado com sucesso e assosciado ao segurado.");
+            }else {
+                System.out.println("Erro: A pessoa não é um segurado.");
+            }
+        } else {
+            System.out.println("Erro: Pessoa não encontrada.");
+        }
     }
 
     private static void listarPessoas(PessoaDAO pessoaDAO) throws SQLException {
@@ -177,5 +193,7 @@ public class Main {
             System.out.print("Informe a alteração desejada: ");
             String alteracao = scanner.nextLine();
             segurado.solicitarAlteracao();
-        }}}
+        }
+    }
+}
 

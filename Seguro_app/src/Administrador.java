@@ -1,5 +1,13 @@
 
-public class Administrador extends Pessoa {
+public class Administrador extends Pessoa{
+    private int idAdministrador;
+
+    public Administrador(){
+
+    }
+    public Administrador(int idAdministrador) {
+        this.idAdministrador = idAdministrador;
+    }
 
     public int getIdAdministrador() {
         return idAdministrador;
@@ -9,7 +17,7 @@ public class Administrador extends Pessoa {
         this.idAdministrador = idAdministrador;
     }
 
-    private int idAdministrador;
-
-
+    public int getIdPessoa() {
+        return super.getIdPessoa();
+    }
 }
