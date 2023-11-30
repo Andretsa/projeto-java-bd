@@ -4,7 +4,8 @@ Projeto de conexão usando Java e SGBD com o MySQL.
 Este projeto visa criar uma aplicação Java que se conecta a um Sistema de Gerenciamento de Banco de Dados (SGBD) MySQL. 
 Para isso, será utilizada uma biblioteca externa (JAR) para simplificar a interação com o banco de dados.
 
-Requisitos
+Requisitos:
+
 Certifique-se de ter os seguintes elementos instalados antes de prosseguir:
 
 JDK (Java Development Kit)
