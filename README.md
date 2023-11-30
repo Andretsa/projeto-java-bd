@@ -9,6 +9,10 @@ Requisitos:
 Certifique-se de ter os seguintes elementos instalados antes de prosseguir:
 
 JDK (Java Development Kit)
+
 IDE Java (por exemplo, Eclipse, IntelliJ IDEA)
+
 MySQL Server instalado e em execução
+
 Biblioteca externa de conexão MySQL (por exemplo, JDBC Driver)
+
